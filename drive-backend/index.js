@@ -1,5 +1,6 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
 const dbConnection = require("./config/db.config");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
@@ -12,6 +13,7 @@ const port = PORT || 8080;
 
 // middlewares
 app.use(express.json());
+app.use(cors());
 // app.use(express.static(path.join(__dirname, "./public")));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // swagger

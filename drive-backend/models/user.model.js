@@ -44,6 +44,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  type: {
+    type: String,
+    default: "folder",
+  },
 });
 
 module.exports = mongoose.model("user", UserSchema);
