@@ -20,6 +20,14 @@ const routes: Routes = [
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
+        path: 'profile',
+        loadChildren: () => import('../pages/profile/profile.module').then( m => m.ProfilePageModule)
+      },
+      {
+        path: 'more',
+        loadChildren: () => import('../pages/more/more.module').then( m => m.MorePageModule)
+      },
+      {
         path: '',
         redirectTo: '/drive/folders',
         pathMatch: 'full'
