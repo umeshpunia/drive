@@ -43,6 +43,7 @@ export class LoginPage implements OnInit {
     this.authSer.loginUser(fData).subscribe(
       (res) => {
         this.loadingSer.dismissLoader();
+        localStorage.setItem('login_email', fData.email);
         this.authSer.isLogin.next(true);
         this.router.navigate(['/drive/folders']);
       },

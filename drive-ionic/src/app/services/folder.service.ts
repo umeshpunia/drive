@@ -1,9 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FolderService {
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  createFolder(val: any) {
+    return this.http.post(`${environment.apiUrl}/folder/add-folder`, val);
+  }
+
+  getFolders(data: any) {
+    return this.http.post(`${environment.apiUrl}/folder/folders`, data);
+  }
 }

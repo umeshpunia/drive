@@ -8,11 +8,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
   isLogin = new BehaviorSubject<boolean>(false);
-  login: boolean = false;
+  login: string = localStorage.getItem('login_email');
 
-  constructor(private http: HttpClient) {
-    this.isLoginMethod();
-  }
+  constructor(private http: HttpClient) {}
 
   registration(data: any) {
     return this.http.post(`${environment.apiUrl}/user/register`, data);
@@ -24,16 +22,5 @@ export class AuthService {
 
   forget(data: any) {
     return this.http.post(`${environment.apiUrl}/user/forget-password`, data);
-  }
-
-  private isLoginMethod() {
-    this.isLogin.subscribe((res) => {
-      if (res) {
-        this.login = true;
-      } else {
-        this.login = false;
-      }
-      console.log(res);
-    });
   }
 }

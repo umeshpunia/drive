@@ -42,6 +42,7 @@ app.get("/", (req, res) => {
   res.send("Hey");
 });
 app.use("/api/v1/user", require("./routes/user.route"));
+app.use("/api/v1/folder", require("./routes/drive/drive.route"));
 
 // server
 app.listen(port, () => {
