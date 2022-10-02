@@ -1,12 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  styleUrls: ['tabs.page.scss'],
 })
-export class TabsPage {
+export class TabsPage implements OnInit {
+  constructor(private authSer: AuthService, private router: Router) {}
 
-  constructor() {}
-
+  ngOnInit(): void {
+    this.authSer.isLogin.subscribe((res) => {
+      if (!res) {
+        this.router.navigate(['/login']);
+      }
+    });
+  }
 }
