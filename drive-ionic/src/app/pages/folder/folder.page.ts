@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { AddFolderComponent } from 'src/app/components/add-folder/add-folder.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { FolderService } from 'src/app/services/folder.service';
 
@@ -14,7 +16,8 @@ export class FolderPage implements OnInit {
   constructor(
     private ar: ActivatedRoute,
     private folderSer: FolderService,
-    private authSer: AuthService
+    private authSer: AuthService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -42,5 +45,20 @@ export class FolderPage implements OnInit {
     this.folderSer.getInsideFolderFiles(json).subscribe((res) => {
       console.log(res);
     });
+  }
+
+  // modal
+  //  folder
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: AddFolderComponent,
+      breakpoints: [0, 0.3, 0.5, 0.8],
+      initialBreakpoint: 0.5,
+      componentProps: {
+        parentFolder: this.folderData.name,
+        parentFolderId: this.folderData._id,
+      },
+    });
+    await modal.present();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { FolderService } from 'src/app/services/folder.service';
@@ -12,6 +12,8 @@ import { SharedService } from 'src/app/services/shared.service';
 export class AddFolderComponent implements OnInit {
   folderForm!: FormGroup;
 
+  @Input() parentFolder: string;
+  @Input() parentFolderId: string;
   constructor(
     private formBuilder: FormBuilder,
     private folderSer: FolderService,
@@ -20,6 +22,7 @@ export class AddFolderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.parentFolder);
     this.folderForm = this.formBuilder.group({
       name: '',
     });
@@ -28,9 +31,9 @@ export class AddFolderComponent implements OnInit {
   create() {
     let fData = this.folderForm.value;
     let json = {
-      name: fData.name,
+      name: this.parentFolder + '/' + fData.name,
       email: this.authSer.login,
-      parentFolderId: '',
+      parentFolderId: this.parentFolderId ? this.parentFolderId : '',
     };
     this.folderSer.createFolder(json).subscribe((res) => {
       console.log(res);
