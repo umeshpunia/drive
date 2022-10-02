@@ -15,4 +15,8 @@ export class FolderService {
   getFolders(data: any) {
     return this.http.post(`${environment.apiUrl}/folder/folders`, data);
   }
+
+  getInsideFolder(id: string) {
+    return this.http.get(`${environment.apiUrl}/folder/folder/${id}`);
+  }
 }

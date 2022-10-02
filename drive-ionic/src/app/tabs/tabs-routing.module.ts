@@ -9,36 +9,51 @@ const routes: Routes = [
     children: [
       {
         path: 'folders',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () =>
+          import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
       {
         path: 'files',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        loadChildren: () =>
+          import('../tab2/tab2.module').then((m) => m.Tab2PageModule),
       },
       {
         path: 'trashed',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        loadChildren: () =>
+          import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
       },
       {
         path: 'profile',
-        loadChildren: () => import('../pages/profile/profile.module').then( m => m.ProfilePageModule)
+        loadChildren: () =>
+          import('../pages/profile/profile.module').then(
+            (m) => m.ProfilePageModule
+          ),
       },
       {
         path: 'more',
-        loadChildren: () => import('../pages/more/more.module').then( m => m.MorePageModule)
+        loadChildren: () =>
+          import('../pages/more/more.module').then((m) => m.MorePageModule),
+      },
+
+      {
+        path: 'folders/:id',
+        loadChildren: () =>
+          import('../pages/folder/folder.module').then(
+            (m) => m.FolderPageModule
+          ),
       },
       {
         path: '',
         redirectTo: '/drive/folders',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
     redirectTo: '/drive/folders',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

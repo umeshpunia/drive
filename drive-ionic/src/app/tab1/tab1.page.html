@@ -26,7 +26,7 @@
   <!-- folders -->
   <ion-list>
     <ion-item-sliding *ngFor="let folder of folderData">
-      <ion-item>
+      <ion-item routerLink="/drive/folders/{{folder._id}}">
         <ion-label>{{folder.name}}</ion-label>
       </ion-item>
 

@@ -13,4 +13,16 @@ function getFolders(req, res) {
   });
 }
 
-module.exports = { getFolders };
+function getFolder(req, res) {
+  const { _id } = req.params;
+
+  if (!_id) return res.json({ status: "400", msg: "Wrong Credentials" });
+
+  FolderSchema.findOne({ _id }, (err, data) => {
+    if (err) return sendResponse(res, 500, err.message);
+    if (!data) return sendResponse(res, 400, "Please Try Again");
+    sendResponse(res, 200, data);
+  });
+}
+
+module.exports = { getFolders, getFolder };
