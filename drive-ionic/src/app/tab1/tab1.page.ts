@@ -31,6 +31,7 @@ export class Tab1Page implements OnInit {
     this.folderSer
       .getFolders({ email: this.authSer.login })
       .subscribe((res) => {
+        console.log(res);
         this.resData = res;
         if (this.resData.status == 200) {
           this.folderData = this.resData.msg;
