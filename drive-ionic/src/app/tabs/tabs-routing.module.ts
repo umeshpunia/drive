@@ -38,8 +38,8 @@ const routes: Routes = [
       {
         path: 'folders/:id',
         loadChildren: () =>
-          import('../pages/folder/folder.module').then(
-            (m) => m.FolderPageModule
+          import('../pages/sub-folder/sub-folder.module').then(
+            (m) => m.SubFolderPageModule
           ),
       },
       {

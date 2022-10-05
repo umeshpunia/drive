@@ -7,6 +7,7 @@ import {
 import { AddFolderComponent } from '../components/add-folder/add-folder.component';
 import { AuthService } from '../services/auth.service';
 import { FolderService } from '../services/folder.service';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-tab1',
@@ -19,11 +20,17 @@ export class Tab1Page implements OnInit {
   constructor(
     private modalController: ModalController,
     private folderSer: FolderService,
-    private authSer: AuthService
+    private authSer: AuthService,
+    private sharedSer: SharedService
   ) {}
 
   ngOnInit(): void {
     this.getFolders();
+    this.sharedSer.isFolderCreated.subscribe((res) => {
+      if (res) {
+        this.getFolders();
+      }
+    });
   }
 
   // get folders
