@@ -14,6 +14,7 @@ const port = PORT || 8080;
 // middlewares
 app.use(express.json());
 app.use(cors());
+app.use("/files", express.static("assets"));
 // app.use(express.static(path.join(__dirname, "./public")));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // swagger
@@ -43,6 +44,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1/user", require("./routes/user.route"));
 app.use("/api/v1/folder", require("./routes/drive/drive.route"));
+app.use("/api/v1/file", require("./routes/file.route"));
 
 // server
 app.listen(port, () => {

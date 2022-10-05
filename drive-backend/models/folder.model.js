@@ -21,6 +21,10 @@ const FolderSchema = new mongoose.Schema(
     location: {
       type: String,
     },
+    isTrashed: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

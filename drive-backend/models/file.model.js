@@ -7,6 +7,10 @@ const FileSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    original: {
+      type: String,
+      required: true,
+    },
     createdBy: {
       type: String,
       required: true,
@@ -21,6 +25,16 @@ const FileSchema = new mongoose.Schema(
     size: {
       type: String,
       require: true,
+    },
+    location: {
+      type: String,
+    },
+    extension: {
+      type: String,
+    },
+    isTrashed: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
