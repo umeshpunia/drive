@@ -18,6 +18,9 @@ const FolderSchema = new mongoose.Schema(
       type: String,
       default: "true",
     },
+    location: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

@@ -2,6 +2,7 @@ const FolderSchema = require("../../models/folder.model");
 const FileSchema = require("../../models/file.model");
 const fs = require("fs");
 const multer = require("multer");
+const { sendResponse } = require("../../services/sendResponse");
 // file uploading
 
 function fileOptions(path) {
@@ -35,6 +36,7 @@ function createFolder(req, res) {
       createdBy: email,
       name,
       parentFolder: parentFolderId,
+      location: mainFolder,
     });
 
     insFolder.save((err, data) => {
@@ -50,33 +52,39 @@ function createFolder(req, res) {
 function createSubFolder(req, res) {
   const { email, name, parentFolderId } = req.body;
 
-  if (!email || !name)
+  if (!email || !name || !parentFolderId)
     return res.status(400).json({ status: 400, msg: "Bad Request" });
 
-  var mainFolder = drivePath + "/" + email + "/" + name;
+  FolderSchema.findOne({ _id: parentFolderId }, (err, data) => {
+    if (err) sendResponse(res, 500, err.message);
+    if (!data) sendResponse(res, 400, "No Data Found");
+    var mainFolder = drivePath + "/" + email + "/" + name;
+    fs.mkdir(mainFolder, (err) => {
+      if (err) return res.status(500).json({ status: 500, msg: err.message });
 
-  fs.mkdir(mainFolder, (err) => {
-    if (err) return res.status(500).json({ status: 500, msg: err.message });
+      let insFolder = new FolderSchema({
+        createdBy: email,
+        name,
+        parentFolder: parentFolderId,
+        location: mainFolder,
+      });
 
-    let insFolder = new FolderSchema({
-      createdBy: email,
-      name,
-      parentFolder: parentFolderId,
-    });
+      insFolder.save((err, data) => {
+        console.log(data);
+        if (err) return res.status(501).json({ status: 501, msg: err.message });
+        if (!data)
+          return res.status(401).json({ status: 401, msg: "Please Try Again" });
 
-    insFolder.save((err, data) => {
-      if (err) return res.status(501).json({ status: 501, msg: err.message });
-      if (!data)
-        return res.status(401).json({ status: 401, msg: "Please Try Again" });
-
-      res.status(200).json({ status: 200, msg: "Folder Created Successfully" });
+        res
+          .status(200)
+          .json({ status: 200, msg: "Folder Created Successfully" });
+      });
     });
   });
 }
 
 function uploadFile(req, res) {
   const { email, name, parentFolderId } = req.body;
-
   if (!email || !name)
     return res.status(400).json({ status: 400, msg: "Bad Request" });
 
@@ -99,4 +107,10 @@ function uploadFile(req, res) {
   });
 }
 
-module.exports = { createFolder, uploadFile, createSubFolder };
+function deleteData(req, res) {
+  FolderSchema.remove({}, (err) => {
+    if (err) return console.log(err);
+    console.log("deleted");
+  });
+}
+module.exports = { createFolder, uploadFile, createSubFolder, deleteData };

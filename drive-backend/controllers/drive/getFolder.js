@@ -6,7 +6,7 @@ function getFolders(req, res) {
 
   if (!email) return res.json({ status: "400", msg: "Wrong Credentials" });
 
-  FolderSchema.find({ email }, (err, data) => {
+  FolderSchema.find({ email, parentFolder: "" }, (err, data) => {
     if (err) return sendResponse(res, 500, err.message);
     if (!data) return sendResponse(res, 400, "Please Try Again");
     sendResponse(res, 200, data);

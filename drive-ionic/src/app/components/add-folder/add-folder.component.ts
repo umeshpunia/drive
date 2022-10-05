@@ -31,12 +31,24 @@ export class AddFolderComponent implements OnInit {
   create() {
     let fData = this.folderForm.value;
     let json = {
-      name: this.parentFolder + '/' + fData.name,
+      name: fData.name,
       email: this.authSer.login,
-      parentFolderId: this.parentFolderId ? this.parentFolderId : '',
+      parentFolderId: '',
     };
-    this.folderSer.createFolder(json).subscribe((res) => {
-      console.log(res);
-    });
+
+    if (!this.parentFolderId) {
+      this.folderSer.createFolder(json).subscribe((res) => {
+        console.log('main', res);
+      });
+    } else {
+      let json = {
+        name: fData.name,
+        email: this.authSer.login,
+        parentFolderId: this.parentFolderId,
+      };
+      this.folderSer.createSubFolder(json).subscribe((res) => {
+        console.log('child', res);
+      });
+    }
   }
 }

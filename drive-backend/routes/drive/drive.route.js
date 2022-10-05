@@ -2,6 +2,8 @@ const express = require("express");
 const {
   createFolder,
   uploadFile,
+  createSubFolder,
+  deleteData,
 } = require("../../controllers/drive/add.folder");
 const router = express.Router();
 const {
@@ -14,5 +16,7 @@ router.post("/folders", getFolders);
 router.get("/folder/:_id", getFolder);
 router.post("/folder-files", getFolderFiles);
 router.post("/upload-file", uploadFile);
+router.post("/add-sub-folder", createSubFolder);
+router.get("/delete", deleteData);
 
 module.exports = router;

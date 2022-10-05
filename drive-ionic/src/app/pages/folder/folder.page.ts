@@ -13,6 +13,8 @@ import { FolderService } from 'src/app/services/folder.service';
 export class FolderPage implements OnInit {
   folderRes: any;
   folderData: any;
+  subFolderRes: any;
+  subFolderData: any;
   constructor(
     private ar: ActivatedRoute,
     private folderSer: FolderService,
@@ -20,11 +22,24 @@ export class FolderPage implements OnInit {
     private modalController: ModalController
   ) {}
 
+  id: any;
+
   ngOnInit() {
     let id = this.ar.snapshot.paramMap.get('id');
-
+    this.id = id;
     this.getFolder(id);
     this.getFilesAndFolder(id);
+  }
+
+  // refresher
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+      this.getFilesAndFolder(this.id);
+    }, 2000);
   }
 
   getFolder(id: string) {
@@ -43,7 +58,11 @@ export class FolderPage implements OnInit {
       email: this.authSer.login,
     };
     this.folderSer.getInsideFolderFiles(json).subscribe((res) => {
-      console.log(res);
+      this.subFolderRes = res;
+      if (this.subFolderRes.status == 200) {
+        this.subFolderData = this.subFolderRes.msg;
+        console.log(this.subFolderData);
+      }
     });
   }
 
