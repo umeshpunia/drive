@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080/api/v1',
   mediaUrl: 'http://localhost:8080/files',
+  mediaUrl1: 'http://localhost:8080/files',
 };
 
 /*
