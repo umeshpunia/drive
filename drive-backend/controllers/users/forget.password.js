@@ -1,7 +1,7 @@
 const { main } = require("../../services/mail.service");
 const UserSchema = require("../../models/user.model");
 const TokenSchema = require("../../models/password.model");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 function forget(req, res) {
   const { email } = req.body;
