@@ -6,7 +6,7 @@ const {
   reset,
 } = require("../controllers/users/forget.password");
 const randomstring = require("randomstring");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const UserSchema = require("../models/user.model");
 
 const multer = require("multer");
